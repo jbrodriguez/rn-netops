@@ -1,6 +1,81 @@
 
 #import "RNNetOps.h"
 
+#import <ifaddrs.h>
+#import <arpa/inet.h>
+#import <sys/socket.h>
+#import <netdb.h>
+
+@import SystemConfiguration.CaptiveNetwork;
+
+/*! Returns the string representation of the supplied address.
+ *  \param address Contains a (struct sockaddr) with the address to render.
+ *  \returns A string representation of that address.
+ */
+
+static NSString * displayAddressForAddress(NSData * address) {
+    int         err;
+    NSString *  result;
+    char        hostStr[NI_MAXHOST];
+
+    result = nil;
+
+    if (address != nil) {
+        err = getnameinfo(address.bytes, (socklen_t) address.length, hostStr, sizeof(hostStr), NULL, 0, NI_NUMERICHOST);
+        if (err == 0) {
+            result = @(hostStr);
+        }
+    }
+
+    if (result == nil) {
+        result = @"?";
+    }
+
+    return result;
+}
+
+/*! Returns a short error string for the supplied error.
+ *  \param error The error to render.
+ *  \returns A short string representing that error.
+ */
+
+static NSString * shortErrorFromError(NSError * error) {
+    NSString *      result;
+    NSNumber *      failureNum;
+    int             failure;
+    const char *    failureStr;
+
+    assert(error != nil);
+
+    result = nil;
+
+    // Handle DNS errors as a special case.
+
+    if ( [error.domain isEqual:(NSString *)kCFErrorDomainCFNetwork] && (error.code == kCFHostErrorUnknown) ) {
+        failureNum = error.userInfo[(id) kCFGetAddrInfoFailureKey];
+        if ( [failureNum isKindOfClass:[NSNumber class]] ) {
+            failure = failureNum.intValue;
+            if (failure != 0) {
+                failureStr = gai_strerror(failure);
+                if (failureStr != NULL) {
+                    result = @(failureStr);
+                }
+            }
+        }
+    }
+
+    // Otherwise try various properties of the error object.
+
+    if (result == nil) {
+        result = error.localizedFailureReason;
+    }
+    if (result == nil) {
+        result = error.localizedDescription;
+    }
+    assert(result != nil);
+    return result;
+}
+
 @implementation RNNetOps
 
 // - (dispatch_queue_t)methodQueue

@@ -34,6 +34,8 @@ public class RNNetOpsModule extends ReactContextBaseJavaModule {
   WifiManager wifi;
   InetAddress inet;
 
+  public static final String TAG = "RNNetOps";
+
   private final ReactApplicationContext reactContext;
 
   public RNNetOpsModule(ReactApplicationContext reactContext) {

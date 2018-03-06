@@ -9,7 +9,7 @@
 #import "SimplePing.h"
 #import "poke.h"
 
-@interface RNNetOps : NSObject <RCTBridgeModule>, SimplePingDelegate>
+@interface RNNetOps : NSObject <RCTBridgeModule, SimplePingDelegate>
 
 @property (nonatomic, strong, readwrite, nullable) SimplePing* pinger;
 @property (nonatomic, strong, readwrite, nullable) RCTResponseSenderBlock callback;
