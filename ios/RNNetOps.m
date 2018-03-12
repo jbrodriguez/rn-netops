@@ -1,5 +1,6 @@
 
 #import "RNNetOps.h"
+#import "RNNetOpsReq.h"
 
 #import <ifaddrs.h>
 #import <arpa/inet.h>
@@ -238,7 +239,7 @@ RCT_EXPORT_METHOD(ping:(NSString *)hostName timeout:(nonnull NSNumber *)timeout 
 }
 
 - (void)timerFired:(NSTimer *)timer {
-    NSLog(@"ping timeout occurred, host not reachable: %d", [self.timeout integerValue]);
+    NSLog(@"ping timeout occurred, host not reachable: %ld", (long)[self.timeout integerValue]);
     // Move to next host
 
     bool found = false;
@@ -261,6 +262,14 @@ RCT_EXPORT_METHOD(poke:(NSString *)hostName port:(nonnull NSString *)port timeou
         // NSLog(@"poke(%s)-host(%s)-port(%d)", found ? "true" : "false", host, portNum);
 
         callback(@[@(found)]);
+    });
+}
+
+RCT_EXPORT_METHOD(fetch:(NSString *)url options:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback)
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        RNNetOpsReq *netop = [[RNNetOpsReq alloc] init];
+        [netop sendRequest:url options:options callback:callback];
     });
 }
 

@@ -1,13 +1,12 @@
 
-#if __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
 #import <React/RCTBridgeModule.h>
-#endif
 
 #import "wol.h"
 #import "SimplePing.h"
 #import "poke.h"
+
+#ifndef RNNetOps_h
+#define RNNetOps_h
 
 @interface RNNetOps : NSObject <RCTBridgeModule, SimplePingDelegate>
 
@@ -17,3 +16,5 @@
 @property (nonatomic, strong, readwrite, nonnull) NSNumber* timeout;
 
 @end
+
+#endif /* RNNetOps_h */
