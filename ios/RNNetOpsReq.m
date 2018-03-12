@@ -113,8 +113,6 @@
 				NSFileManager *fm = [NSFileManager defaultManager];
 				NSError *err = nil;
 
-				NSLog(@"network-loc(%@)-per(%@)", location, permanent);
-
 				[fm moveItemAtURL:location toURL:permanent error:&err];
 				if (err) {
 					NSLog(@"Unable to move temporary file to destination:(%@)", err);
