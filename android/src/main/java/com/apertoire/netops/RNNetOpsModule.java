@@ -4,6 +4,7 @@ package com.apertoire.netops;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.Callback;
 
 import android.content.Context;
@@ -28,13 +29,21 @@ import java.net.Socket;
 import java.net.InetSocketAddress;
 import java.net.ConnectException;
 
+import com.facebook.react.modules.network.OkHttpClientProvider;
+import okhttp3.OkHttpClient;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import net.mafro.android.wakeonlan.MagicPacket;
 
 public class RNNetOpsModule extends ReactContextBaseJavaModule {
   WifiManager wifi;
   InetAddress inet;
 
-  public static final String TAG = "RNNetOps";
+  private final OkHttpClient mClient;
+  static final ExecutorService pool = Executors.newCachedThreadPool();
+
+  static final String TAG = "RNNetOps";
 
   private final ReactApplicationContext reactContext;
 
@@ -43,6 +52,8 @@ public class RNNetOpsModule extends ReactContextBaseJavaModule {
 
     wifi = (WifiManager)reactContext.getApplicationContext()
             .getSystemService(Context.WIFI_SERVICE);
+
+    mClient = OkHttpClientProvider.getOkHttpClient();
     
     this.reactContext = reactContext;
   }
@@ -140,5 +151,10 @@ public class RNNetOpsModule extends ReactContextBaseJavaModule {
         callback.invoke(found);
       }
 		}.execute();
-  }    
+  }
+
+  @ReactMethod
+  public void fetch(final String url, final ReadableMap options, final Callback callback) {
+    pool.execute(new RNNetOpsReq(this.reactContext, url, options, this.mClient, callback));
+  }
 }

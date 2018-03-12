@@ -11,6 +11,7 @@
 		CA7548AC204EF19400E921CF /* wol.c in Sources */ = {isa = PBXBuildFile; fileRef = CA7548A6204EF19400E921CF /* wol.c */; };
 		CA7548AD204EF19400E921CF /* poke.c in Sources */ = {isa = PBXBuildFile; fileRef = CA7548AA204EF19400E921CF /* poke.c */; };
 		CA7548AE204EF19400E921CF /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = CA7548AB204EF19400E921CF /* SimplePing.m */; };
+		CAADB089205439F800D54740 /* RNNetOpsReq.m in Sources */ = {isa = PBXBuildFile; fileRef = CAADB087205439F800D54740 /* RNNetOpsReq.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,8 @@
 		CA7548A9204EF19400E921CF /* poke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poke.h; sourceTree = "<group>"; };
 		CA7548AA204EF19400E921CF /* poke.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = poke.c; sourceTree = "<group>"; };
 		CA7548AB204EF19400E921CF /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
+		CAADB087205439F800D54740 /* RNNetOpsReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNNetOpsReq.m; sourceTree = "<group>"; };
+		CAADB088205439F800D54740 /* RNNetOpsReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNNetOpsReq.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +62,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				CAADB088205439F800D54740 /* RNNetOpsReq.h */,
+				CAADB087205439F800D54740 /* RNNetOpsReq.m */,
 				CA7548AA204EF19400E921CF /* poke.c */,
 				CA7548A9204EF19400E921CF /* poke.h */,
 				CA7548A8204EF19400E921CF /* SimplePing.h */,
@@ -127,6 +132,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAADB089205439F800D54740 /* RNNetOpsReq.m in Sources */,
 				CA7548AC204EF19400E921CF /* wol.c in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* RNNetOps.m in Sources */,
 				CA7548AD204EF19400E921CF /* poke.c in Sources */,
