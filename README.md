@@ -34,21 +34,45 @@
       compile project(':rn-netops')
     ```
 
-#### Windows
-
-[Read it! :D](https://github.com/ReactWindows/react-native)
-
-1.  In Visual Studio add the `RNNetOps.sln` in `node_modules/rn-netops/windows/RNNetOps.sln` folder to their solution, reference from their app.
-2.  Open up your `MainPage.cs` app
-
-*   Add `using Net.Ops.RNNetOps;` to the usings at the top of the file
-*   Add `new RNNetOpsPackage()` to the `List<IReactPackage>` returned by the `Packages` method
-
 ## Usage
 
 ```javascript
-import RNNetOps from 'rn-netops'
+import NetOps from 'rn-netops'
 
-// TODO: What to do with the module?
-RNNetOps
+NetOps.
+
+    // ipv4
+    ipAddress: ()
+
+    // ping packet
+    ping: (url, timeout)
+
+    // wol packet
+    wake: (mac, ip)
+
+    // socket connection
+    poke: (host, port, timeout)
+
+    // Create an HTTP request.
+    // @param  {string} url Request target url string.
+    // @param  {object} options Configuration options for the fetch request, which can be.
+    // 		@param  {string} method HTTP method, should be `GET`, `POST`, `PUT`, `DELETE`
+    // 		@param  {object} headers HTTP request headers.
+    // 		@param  {string} body HTTP request body.
+    // 		@param  {boolean} cacheImage Use the url as a cache key (md5'd) and use a png
+    //			extension for the file.
+    // 		@param  {number} timeout Request timeout in millionseconds.
+    // 		@param  {boolean} trusty If true, the request can be made against self-signed certs.
+    fetch: (url, options)
 ```
+
+## Credits
+
+Inspired by
+
+*   [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob)
+*   [react-native-network-info](https://github.com/pusherman/react-native-network-info)
+
+## License
+
+MIT
