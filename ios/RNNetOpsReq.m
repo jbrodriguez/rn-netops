@@ -144,10 +144,35 @@
 				self.callback(@[exception, @3, [NSNull null]]);
 				return;
 			}
+			// turns out an endpoint we invoke 'scatters' nulls in its reply
+			// we need to strip them, because we need the data beyond those nulls
+			// if nothing is done [NSString initWithData:encoding] ignores aything
+			// the first null it finds
+			// we convert nulls to spaces and take advantage of the fact that
+			// [NSString initWithData:encoding] works even with non-null terminated
+			// strings
+			// we incurr in two penalties
+			// - memory allocation [data length]
+			// - o(n) traversal to copy data to output array
+			char *in = (char *) [data bytes];
+			NSInteger len = [data length];
+			char *out = (char*)malloc(len);
+			
+			for (int i = 0 ; i < len; i++)
+			{
+                if (in[i] == '\0') {
+					out[i] = ' ';
+				} else {
+					out[i] = in[i];
+				}
+			}
+
+			NSData *cleanData = [NSData dataWithBytesNoCopy:out length:len freeWhenDone:true];
 
 			NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
 
-			NSString *reply = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			NSString *reply = [[NSString alloc] initWithData:cleanData encoding:NSUTF8StringEncoding];
+			
 			self.callback(@[[NSNull null], [NSNumber numberWithLong:[httpResponse statusCode]], reply]);				
 		}
 	];
