@@ -150,7 +150,17 @@ public class RNNetOpsReq implements Runnable {
 
 						callback.invoke(null, resp.code(), file.getAbsolutePath());
 					} else {
-						callback.invoke(null, resp.code(), new String(resp.body().bytes(), "UTF-8"));
+						// remove nulls from input string, since we need content that is beyond those nulls
+						// here we edit the byte array 'in-place'
+						// we incurr in O(n) traversal penalty, but no memory allocation
+						final byte[] data = resp.body().bytes();
+						for (int i = 0; i < data.length; i++) {
+							if ((int) data[i] == 0) {
+								data[i] = ' ';
+							}
+						}
+						
+						callback.invoke(null, resp.code(), new String(data, "UTF-8"));
 					}
 
 					resp.body().close();
