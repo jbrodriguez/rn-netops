@@ -1,0 +1,16 @@
+Version v2.0.0 - 2019-08-05
+- Initial commit
+- Add missing code
+- Implement fetch operation
+- Update docs
+- Add license
+- Remove logging
+- Bump gradle build tool to 3.1.4
+- Bump iOS platform target in Xcode project to 9.0
+- Fix issue with nulls in api reply
+- Fix issues with nulls in reply (android)
+- Enable AndroidX support
+- Enable RN iOS auto-linking
+
+
+
