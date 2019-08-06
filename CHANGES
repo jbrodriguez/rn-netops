@@ -1,3 +1,7 @@
+Version v2.0.2 - 2019-08-06
+- Fix package.json version
+
+
 Version v2.0.1 - 2019-08-06
 - Fix filename mask
 
