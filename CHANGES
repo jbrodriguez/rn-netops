@@ -1,3 +1,7 @@
+Version v2.0.1 - 2019-08-06
+- Fix filename mask
+
+
 Version v2.0.0 - 2019-08-05
 - Initial commit
 - Add missing code
@@ -11,6 +15,3 @@ Version v2.0.0 - 2019-08-05
 - Fix issues with nulls in reply (android)
 - Enable AndroidX support
 - Enable RN iOS auto-linking
-
-
-
