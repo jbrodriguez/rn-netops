@@ -18,6 +18,8 @@ import java.net.UnknownHostException;
 import java.net.SocketException;
 import java.nio.ByteOrder;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 import java.net.NetworkInterface;
@@ -31,6 +33,7 @@ import java.net.ConnectException;
 
 import com.facebook.react.modules.network.OkHttpClientProvider;
 import okhttp3.OkHttpClient;
+import okhttp3.Cookie;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,6 +45,7 @@ public class RNNetOpsModule extends ReactContextBaseJavaModule {
 
   private final OkHttpClient mClient;
   static final ExecutorService pool = Executors.newCachedThreadPool();
+  private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
 
   static final String TAG = "RNNetOps";
 
@@ -155,6 +159,6 @@ public class RNNetOpsModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void fetch(final String url, final ReadableMap options, final Callback callback) {
-    pool.execute(new RNNetOpsReq(this.reactContext, url, options, this.mClient, callback));
+    pool.execute(new RNNetOpsReq(this.reactContext, url, options, this.mClient, this.cookieStore, callback));
   }
 }
