@@ -18,6 +18,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.TlsVersion;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 
 public class RNNetOpsReq implements Runnable {
 
@@ -40,14 +44,16 @@ public class RNNetOpsReq implements Runnable {
   RNNetOpsConfig options;
   OkHttpClient client;
   Callback callback;
+  HashMap<String, List<Cookie>> cookieStore;
 
   String destPath;
 
-  public RNNetOpsReq(ReactApplicationContext context, String url, ReadableMap options, OkHttpClient client, final Callback callback) {
+  public RNNetOpsReq(ReactApplicationContext context, String url, ReadableMap options, OkHttpClient client, HashMap<String, List<Cookie>> cookieStore, final Callback callback) {
 		this.ctx = context;
 		this.url = url;
 		this.options = new RNNetOpsConfig(options);
 		this.client = client;
+		this.cookieStore = cookieStore;
 		this.callback = callback;
   }
 
@@ -76,6 +82,21 @@ public class RNNetOpsReq implements Runnable {
 			} else {
 				clientBuilder = client.newBuilder();
 			}
+
+			final HashMap<String, List<Cookie>> cookieStore = this.cookieStore;
+
+			clientBuilder.cookieJar(new CookieJar() {
+				@Override
+				public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+					cookieStore.put(url.host(), cookies);
+				}
+
+				@Override
+				public List<Cookie> loadForRequest(HttpUrl url) {
+					List<Cookie> cookies = cookieStore.get(url.host());
+					return cookies != null ? cookies : new ArrayList<Cookie>();
+				}
+			});
 
 			final Request.Builder builder = new Request.Builder();
 			try {
