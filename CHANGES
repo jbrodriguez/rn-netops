@@ -1,16 +1,21 @@
+Version v2.2.0 - 2022-11-24
+
+- fix usage of deprecated function
+
 Version v2.1.0 - 2019-10-20
+
 - Support Unraid 6.8.x
 
-
 Version v2.0.2 - 2019-08-06
+
 - Fix package.json version
 
-
 Version v2.0.1 - 2019-08-06
+
 - Fix filename mask
 
-
 Version v2.0.0 - 2019-08-05
+
 - Initial commit
 - Add missing code
 - Implement fetch operation
