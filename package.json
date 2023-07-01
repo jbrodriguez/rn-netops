@@ -1,6 +1,6 @@
 {
   "name": "rn-netops",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Common network operations for React Native",
   "main": "index.js",
   "scripts": {
