@@ -13,9 +13,10 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion "28.0.3"
 
+    namespace "com.apertoire.netops"
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
